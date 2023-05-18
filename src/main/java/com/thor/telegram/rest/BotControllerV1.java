@@ -1,30 +1,32 @@
 package com.thor.telegram.rest;
 
+import com.thor.telegram.dto.bot.BotRequest;
+import com.thor.telegram.dto.bot.BotResponse;
+import com.thor.telegram.mapper.BotMapper;
 import com.thor.telegram.model.BotDomain;
 import com.thor.telegram.repository.BotRepository;
+import com.thor.telegram.service.BotService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/bot")
+@RequiredArgsConstructor
 public class BotControllerV1 {
 
-    @Autowired
-    private BotRepository repository;
+    private final BotService service;
+    private final BotMapper mapper;
 
     @PostMapping("/save")
-    public Mono<BotDomain> save() {
-        var bot = BotDomain.builder()
-                .name(UUID.randomUUID().toString())
-                .token("xpto")
-                .user("user")
-                .build();
-        return repository.save(bot);
+    public Mono<BotResponse> save(@RequestBody BotRequest request) {
+
+        return Mono.just(request)
+                .map(mapper::toDomain)
+                .flatMap(service::save)
+                .map(mapper::toResponse);
     }
 }
