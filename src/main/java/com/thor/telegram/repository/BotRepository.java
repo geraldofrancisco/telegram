@@ -8,4 +8,5 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface BotRepository extends ReactiveCrudRepository<BotDomain,String> {
     Mono<Boolean> existsByName(String name);
+    Mono<BotDomain> findByName(String name);
 }

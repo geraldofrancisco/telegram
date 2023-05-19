@@ -24,7 +24,7 @@ public class BotService {
     }
 
     public Mono<BotDomain> getByName(String name) {
-        return repository.findById(name)
+        return repository.findByName(name)
                 .switchIfEmpty(Mono.error(new BusinessException(BOT_NOT_EXIST)));
     }
 }

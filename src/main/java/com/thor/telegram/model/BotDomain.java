@@ -12,7 +12,6 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table(schema = "telegram", name = "bot")
 public class BotDomain {
 
-    @Id
     @Column("nome")
     private String name;
 

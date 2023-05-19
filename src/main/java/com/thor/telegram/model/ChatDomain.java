@@ -11,7 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Builder
 @Table(schema = "telegram", name = "chat")
 public class ChatDomain {
-    @Id
+
     @Column("nome")
     private String name;
 
