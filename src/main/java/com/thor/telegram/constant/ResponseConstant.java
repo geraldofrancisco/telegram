@@ -13,4 +13,8 @@ public class ResponseConstant {
     public static final String MESSAGES_ERROR = "Error message";
     //BOT
     public static final String BOT_EXISTING = "Bot já cadastrado no sistema";
+    public static final String BOT_NOT_EXIST = "Bot não encontrado no sistema";
+    //CHAT
+    public static final String CHAT_EXISTING = "Chat já cadastrado no sistema";
+    public static final String CHAT_NOT_EXIST = "Chat não encontrado no sistema";
 }

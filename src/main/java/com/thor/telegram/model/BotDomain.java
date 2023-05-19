@@ -3,6 +3,7 @@ package com.thor.telegram.model;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -11,6 +12,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table(schema = "telegram", name = "bot")
 public class BotDomain {
 
+    @Id
     @Column("nome")
     private String name;
 
