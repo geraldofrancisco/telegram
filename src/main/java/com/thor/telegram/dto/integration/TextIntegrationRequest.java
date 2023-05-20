@@ -14,4 +14,8 @@ public class TextIntegrationRequest {
     @JsonProperty("chat_id")
     private String chat;
     private String text;
+
+    @Builder.Default
+    @JsonProperty("parse_mode")
+    private String mode = "HTML";
 }

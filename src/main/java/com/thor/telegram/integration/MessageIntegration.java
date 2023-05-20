@@ -1,10 +1,13 @@
 package com.thor.telegram.integration;
 
+import com.thor.telegram.dto.chat.ChatResponse;
 import com.thor.telegram.dto.integration.TextIntegrationRequest;
+import com.thor.telegram.dto.message.MessageTextRequest;
 import com.thor.telegram.exception.IntegrationException;
 import com.thor.telegram.model.MessageDomain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -26,13 +29,13 @@ public class MessageIntegration extends IntegrationBase{
 
     private final WebClient webClient;
 
-    public Mono<Void> sendTextMessage(MessageDomain domain) {
+    public Mono<Void> sendTextMessage(Pair<MessageTextRequest, ChatResponse> pair) {
         var url = UriComponentsBuilder.fromUriString(base)
-                .path(sendText).buildAndExpand("6068453482:AAFkjxaVc7MUR05cf163pe4gpx72aSLGZxw").toString();
+                .path(sendText).buildAndExpand(pair.getSecond().getBot().getToken()).toString();
 
         var request = TextIntegrationRequest.builder()
-                .text(domain.getMessage())
-                .chat(domain.getChat())
+                .text(pair.getFirst().getMessage())
+                .chat(pair.getFirst().getChat())
                 .build();
 
         return webClient

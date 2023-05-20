@@ -1,27 +1,32 @@
 package com.thor.telegram.service;
 
+import com.thor.telegram.dto.message.MessageTextRequest;
 import com.thor.telegram.integration.MessageIntegration;
+import com.thor.telegram.mapper.MessageMapper;
 import com.thor.telegram.model.MessageDomain;
 import com.thor.telegram.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import static org.springframework.data.util.Pair.of;
 
 @Service
 @RequiredArgsConstructor
 public class MessageService {
 
     private final MessageRepository repository;
+    private final MessageMapper mapper;
     private final MessageIntegration messageTextIntegration;
     private final ChatService chatService;
 
-    public Mono<Void> sendText(MessageDomain domain) {
-        return chatService.getByName(domain.getChat())
-                .flatMap(chat -> {
-                    //domain.setChatDomain(chat);
-                    return Mono.just(domain)
-                            .flatMap(repository::save)
-                            .flatMap(messageTextIntegration::sendTextMessage);
-                });
+    public Mono<Void> sendText(MessageTextRequest request) {
+        return chatService.getByName(request.getChat())
+                .flatMap(chat ->
+                    Mono.just(of(request, chat))
+                            .flatMap(messageTextIntegration::sendTextMessage)
+                            //.flatMap(repository::save)
+                );
     }
 }
