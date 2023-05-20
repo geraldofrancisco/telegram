@@ -3,7 +3,7 @@ package com.thor.telegram.model;
 import com.thor.telegram.enumereble.MessageType;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -29,7 +29,7 @@ public class MessageDomain {
     private String fileBase64;
 
     @Column("tipo")
-    private MessageType type;
+    private String type;
 
     @Column("data_hora_criacao")
     @Builder.Default
@@ -37,4 +37,7 @@ public class MessageDomain {
 
     @Column("data_hora_envio")
     private LocalDateTime dateTimeSending;
+
+    @Transient
+    private ChatDomain chatDomain;
 }

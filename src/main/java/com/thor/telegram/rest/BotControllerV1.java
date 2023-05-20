@@ -25,8 +25,6 @@ public class BotControllerV1 {
     public Mono<BotResponse> save(@RequestBody BotRequest request) {
 
         return Mono.just(request)
-                .map(mapper::toDomain)
-                .flatMap(service::save)
-                .map(mapper::toResponse);
+                .flatMap(service::save);
     }
 }

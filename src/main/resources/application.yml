@@ -3,3 +3,9 @@ spring:
     url: ${POSTGRES_URL:r2dbc:postgresql://localhost:5432/postgres}
     username: ${POSTGRES_USERNAME:postgres}
     password: ${POSTGRES_PASSWORD:123456}
+
+app:
+  telegram-api:
+    base: ${TELEGRAM_BASE:https://api.telegram.org/bot{telegram_token}/}
+    send-text: ${TELEGRAM_TEXT:sendMessage}
+    send-photo: ${TELEGRAM_PHOTO:sendPhoto}
