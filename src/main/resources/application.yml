@@ -5,6 +5,11 @@ spring:
     password: ${POSTGRES_PASSWORD:123456}
 
 app:
+  connection:
+    retry:
+      seconds-interval: 3
+      quantity: 3
+    seconds-timeout: 10
   telegram-api:
     base: ${TELEGRAM_BASE:https://api.telegram.org/bot{telegram_token}/}
     send-text: ${TELEGRAM_TEXT:sendMessage}

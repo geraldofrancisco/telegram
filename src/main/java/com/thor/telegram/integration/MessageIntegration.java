@@ -1,18 +1,20 @@
 package com.thor.telegram.integration;
 
 import com.thor.telegram.dto.integration.TextIntegrationRequest;
+import com.thor.telegram.exception.IntegrationException;
 import com.thor.telegram.model.MessageDomain;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
+import static java.time.Duration.ofSeconds;
+
 @Component
 @RequiredArgsConstructor
-public class MessageIntegration {
+public class MessageIntegration extends IntegrationBase{
     @Value("${app.telegram-api.base}")
     private String base;
 
@@ -39,6 +41,9 @@ public class MessageIntegration {
                 .bodyValue(request)
                 .retrieve()
                 .toBodilessEntity()
+                .timeout(ofSeconds(this.timeout))
+                .retryWhen(this.retry())
+                .onErrorResume(e -> Mono.error(IntegrationException::new))
                 .then();
     }
 }
