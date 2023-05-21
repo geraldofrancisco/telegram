@@ -5,8 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import reactor.util.retry.Retry;
 import reactor.util.retry.RetryBackoffSpec;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
+import static java.time.Duration.ofSeconds;
+import static java.time.temporal.ChronoUnit.SECONDS;
+import static reactor.util.retry.Retry.fixedDelay;
 
 @Slf4j
 public abstract class IntegrationBase {
@@ -19,8 +20,10 @@ public abstract class IntegrationBase {
     @Value("${app.connection.seconds-timeout}")
     protected Long timeout;
 
+
+
     protected RetryBackoffSpec retry() {
-        return Retry.fixedDelay(retryQuantity, Duration.ofSeconds(retrySeconds, ChronoUnit.SECONDS.ordinal()))
+        return fixedDelay(retryQuantity, ofSeconds(retrySeconds, SECONDS.ordinal()))
                 .doBeforeRetry(retrySignal -> log.info("[{}] Retry connection. Attempt: {}. Cause: {}",
                         this.getClass().getName(), retrySignal.totalRetries(), retrySignal.failure().getMessage()));
     }

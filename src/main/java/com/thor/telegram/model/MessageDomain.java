@@ -35,9 +35,8 @@ public class MessageDomain {
     @Builder.Default
     private LocalDateTime dateTimeCreation = now();
 
+    @Builder.Default
     @Column("data_hora_envio")
-    private LocalDateTime dateTimeSending;
+    private LocalDateTime dateTimeSending = now();
 
-    @Transient
-    private ChatDomain chatDomain;
 }
