@@ -1,6 +1,6 @@
 package com.thor.telegram.service;
 
-import com.thor.telegram.dto.message.MessageTextRequest;
+import com.thor.telegram.dto.message.MessageRequest;
 import com.thor.telegram.integration.MessageIntegration;
 import com.thor.telegram.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class MessageService {
     private final MessageIntegration messageTextIntegration;
     private final ChatService chatService;
 
-    public Mono<Void> sendText(MessageTextRequest request) {
+    public Mono<Void> sendText(MessageRequest request) {
         return chatService.getByName(request.getChat())
                 .flatMap(chat ->
                     Mono.just(of(request, chat))

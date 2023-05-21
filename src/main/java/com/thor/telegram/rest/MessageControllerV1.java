@@ -1,6 +1,6 @@
 package com.thor.telegram.rest;
 
-import com.thor.telegram.dto.message.MessageTextRequest;
+import com.thor.telegram.dto.message.MessageRequest;
 import com.thor.telegram.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,7 @@ public class MessageControllerV1 {
     private final MessageService service;
 
     @PostMapping("/text")
-    public Mono<Void> sendMessage(@RequestBody MessageTextRequest request) {
+    public Mono<Void> sendMessage(@RequestBody MessageRequest request) {
        return Mono.just(request)
                .flatMap(service::sendText);
     }
