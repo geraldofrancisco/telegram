@@ -36,7 +36,7 @@ public class MessageDomain {
     private LocalDateTime dateTimeCreation = now();
 
     @Builder.Default
-    @Column("data_hora_envio")
-    private LocalDateTime dateTimeSending = now();
+    @Column("foi_enviado")
+    private Boolean sent = true;
 
 }

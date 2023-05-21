@@ -55,7 +55,7 @@ public class MessageIntegration extends IntegrationBase {
                                 .timeout(ofSeconds(this.timeout))
                                 .retryWhen(this.retry())
                                 .onErrorResume(e -> {
-                                    m.setDateTimeSending(null);
+                                    m.setSent(false);
                                     return Mono.empty();
                                 })
                                 .thenReturn(m)

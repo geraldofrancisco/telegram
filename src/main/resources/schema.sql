@@ -18,6 +18,6 @@ CREATE TABLE IF NOT EXISTS telegram.mensagem (
 	mensagem text NULL,
 	tipo varchar(10) NOT NULL,
 	data_hora_criacao timestamp NOT NULL,
-	data_hora_envio timestamp NULL,
+	foi_enviado boolean NULL DEFAULT FALSE,
 	CONSTRAINT mensagem_chat_fk FOREIGN KEY (chat_id) REFERENCES telegram.chat(nome)
 );
